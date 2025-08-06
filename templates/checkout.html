@@ -1,0 +1,303 @@
+{% extends "master.html" %}
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+    <!-- Header -->
+    <div class="mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">Checkout</h2>
+        <nav class="flex items-center space-x-2 text-sm text-gray-500">
+            <a href="/cart" class="hover:text-blue-600">Cart</a>
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+            </svg>
+            <span class="text-blue-600 font-medium">Checkout</span>
+        </nav>
+    </div>
+
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+        <!-- Main Content -->
+        <div class="lg:col-span-8">
+            <form @submit.prevent="submitOrder" class="space-y-8">
+                <!-- Contact Information -->
+                <div class="bg-white border border-gray-200 rounded-lg shadow-sm">
+                    <div class="px-6 py-4 bg-gray-50 border-b border-gray-200 rounded-t-lg">
+                        <h3 class="text-lg font-medium text-gray-900 flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path>
+                            </svg>
+                            Contact Information
+                        </h3>
+                    </div>
+                    <div class="p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="firstName" class="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
+                                <input type="text" id="firstName" v-model="customer.firstName" required
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label for="lastName" class="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
+                                <input type="text" id="lastName" v-model="customer.lastName" required
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                                <input type="email" id="email" v-model="customer.email" required
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
+                                <input type="tel" id="phone" v-model="customer.phone" required
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shipping Address -->
+                <div class="bg-white border border-gray-200 rounded-lg shadow-sm">
+                    <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
+                        <h3 class="text-lg font-medium text-gray-900 flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            Shipping Address
+                        </h3>
+                    </div>
+                    <div class="p-6">
+                        <div class="grid grid-cols-1 gap-6">
+                            <div>
+                                <label for="address1" class="block text-sm font-medium text-gray-700 mb-2">Street Address *</label>
+                                <input type="text" id="address1" v-model="address.street" required
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label for="address2" class="block text-sm font-medium text-gray-700 mb-2">Apartment, suite, etc. (optional)</label>
+                                <input type="text" id="address2" v-model="address.apartment"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div>
+                                    <label for="city" class="block text-sm font-medium text-gray-700 mb-2">City *</label>
+                                    <input type="text" id="city" v-model="address.city" required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                                <div>
+                                    <label for="state" class="block text-sm font-medium text-gray-700 mb-2">State / Province *</label>
+                                    <select id="state" v-model="address.state" required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="">Select State</option>
+                                        <option value="CA">California</option>
+                                        <option value="NY">New York</option>
+                                        <option value="TX">Texas</option>
+                                        <option value="FL">Florida</option>
+                                        <!-- Add more states as needed -->
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="zipCode" class="block text-sm font-medium text-gray-700 mb-2">ZIP / Postal Code *</label>
+                                    <input type="text" id="zipCode" v-model="address.zipCode" required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="country" class="block text-sm font-medium text-gray-700 mb-2">Country *</label>
+                                <select id="country" v-model="address.country" required
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="">Select Country</option>
+                                    <option value="US">United States</option>
+                                    <option value="CA">Canada</option>
+                                    <option value="UK">United Kingdom</option>
+                                    <!-- Add more countries as needed -->
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Information -->
+                <div class="bg-white border border-gray-200 rounded-lg shadow-sm">
+                    <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
+                        <h3 class="text-lg font-medium text-gray-900 flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                            </svg>
+                            Payment Information
+                        </h3>
+                    </div>
+                    <div class="p-6">
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-gray-700 mb-3">Payment Method</label>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <label class="relative flex items-center cursor-pointer">
+                                    <input type="radio" v-model="payment.method" value="credit_card" name="payment_method" 
+                                        class="sr-only">
+                                    <div class="flex items-center justify-center w-full p-4 border-2 rounded-lg transition-colors"
+                                        :class="payment.method === 'credit_card' ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'">
+                                        <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4zM18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"></path>
+                                        </svg>
+                                        <span class="text-sm font-medium">Credit Card</span>
+                                    </div>
+                                </label>
+                                <label class="relative flex items-center cursor-pointer">
+                                    <input type="radio" v-model="payment.method" value="paypal" name="payment_method" 
+                                        class="sr-only">
+                                    <div class="flex items-center justify-center w-full p-4 border-2 rounded-lg transition-colors"
+                                        :class="payment.method === 'paypal' ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'">
+                                        <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M10 2L3 7v3c0 5.55 3.84 9.74 9 10 5.16-.26 9-4.45 9-10V7l-7-5z"></path>
+                                        </svg>
+                                        <span class="text-sm font-medium">PayPal</span>
+                                    </div>
+                                </label>
+                                <label class="relative flex items-center cursor-pointer">
+                                    <input type="radio" v-model="payment.method" value="bank_transfer" name="payment_method" 
+                                        class="sr-only">
+                                    <div class="flex items-center justify-center w-full p-4 border-2 rounded-lg transition-colors"
+                                        :class="payment.method === 'bank_transfer' ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'">
+                                        <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm0 2h12v8H4V6z"></path>
+                                        </svg>
+                                        <span class="text-sm font-medium">Bank Transfer</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Credit Card Form -->
+                        <div v-if="payment.method === 'credit_card'" class="space-y-6">
+                            <div>
+                                <label for="cardNumber" class="block text-sm font-medium text-gray-700 mb-2">Card Number *</label>
+                                <input type="text" id="cardNumber" v-model="payment.cardNumber" 
+                                    placeholder="1234 5678 9012 3456" maxlength="19"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label for="cardName" class="block text-sm font-medium text-gray-700 mb-2">Name on Card *</label>
+                                <input type="text" id="cardName" v-model="payment.cardName"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            <div class="grid grid-cols-2 gap-6">
+                                <div>
+                                    <label for="expiryDate" class="block text-sm font-medium text-gray-700 mb-2">Expiry Date *</label>
+                                    <input type="text" id="expiryDate" v-model="payment.expiryDate" 
+                                        placeholder="MM/YY" maxlength="5"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                                <div>
+                                    <label for="cvv" class="block text-sm font-medium text-gray-700 mb-2">CVV *</label>
+                                    <input type="text" id="cvv" v-model="payment.cvv" 
+                                        placeholder="123" maxlength="4"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PayPal -->
+                        <div v-if="payment.method === 'paypal'" class="text-center py-8">
+                            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+                                <svg class="w-12 h-12 mx-auto text-yellow-600 mb-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 2L3 7v3c0 5.55 3.84 9.74 9 10 5.16-.26 9-4.45 9-10V7l-7-5z"></path>
+                                </svg>
+                                <h4 class="text-lg font-medium text-gray-900 mb-2">PayPal Payment</h4>
+                                <p class="text-gray-600">You will be redirected to PayPal to complete your payment securely.</p>
+                            </div>
+                        </div>
+
+                        <!-- Bank Transfer -->
+                        <div v-if="payment.method === 'bank_transfer'" class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                            <h4 class="text-lg font-medium text-gray-900 mb-3">Bank Transfer Details</h4>
+                            <div class="space-y-2 text-sm text-gray-700">
+                                <p><strong>Bank Name:</strong> Example Bank</p>
+                                <p><strong>Account Number:</strong> 123-456-789</p>
+                                <p><strong>Routing Number:</strong> 987654321</p>
+                                <p><strong>Reference:</strong> Your order number will be provided after confirmation</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Special Instructions -->
+                <div class="bg-white border border-gray-200 rounded-lg shadow-sm">
+                    <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
+                        <h3 class="text-lg font-medium text-gray-900">Special Instructions</h3>
+                    </div>
+                    <div class="p-6">
+                        <label for="instructions" class="block text-sm font-medium text-gray-700 mb-2">Order Notes (optional)</label>
+                        <textarea id="instructions" v-model="specialInstructions" rows="4"
+                            placeholder="Any special delivery instructions or notes..."
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="lg:col-span-4 mt-8 lg:mt-0">
+            <div class="bg-white border border-gray-200 rounded-lg shadow-sm sticky top-8">
+                <div class="px-6 py-4 bg-gray-50 border-b border-gray-200 rounded-t-lg">
+                    <h3 class="text-lg font-medium text-gray-900">Order Summary</h3>
+                </div>
+                <div class="p-6">
+                    <!-- Order Items -->
+                    <div class="space-y-4 mb-6">
+                        <div v-for="(item, index) in cart_list" :key="'checkout_'+index" class="flex items-center space-x-4">
+                            <img :src="item.image" :alt="item.title" class="w-16 h-16 object-contain bg-gray-50 rounded">
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-sm font-medium text-gray-900 truncate">[[ item.title ]]</h4>
+                                <p class="text-sm text-gray-500">Qty: [[ item.qty ]]</p>
+                            </div>
+                            <div class="text-sm font-medium text-gray-900">$ [[ (item.qty * item.price).toLocaleString() ]]</div>
+                        </div>
+                    </div>
+
+                    <!-- Order Totals -->
+                    <div class="border-t border-gray-200 pt-6">
+                        <ul class="divide-y divide-gray-200 mb-6">
+                            <li class="flex justify-between py-3">
+                                <span class="text-gray-600">Subtotal</span>
+                                <strong class="text-gray-900">$ [[ calGrandTotal() ]]</strong>
+                            </li>
+                            <li class="flex justify-between py-3">
+                                <span class="text-gray-600">Shipping</span>
+                                <span class="text-gray-900">$ [[ shipping_fee ]]</span>
+                            </li>
+                            <li class="flex justify-between py-3">
+                                <span class="text-gray-600">Tax</span>
+                                <span class="text-gray-900">$ [[ calTax() ]]</span>
+                            </li>
+                            <li class="flex justify-between py-3 border-t border-gray-200">
+                                <span class="text-gray-900 font-medium text-lg">Total</span>
+                                <strong class="text-gray-900 text-xl">$ [[ calOrderTotal() ]]</strong>
+                            </li>
+                        </ul>
+
+                        <!-- Place Order Button -->
+                        <button type="submit" @click="submitOrder"
+                            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-md transition duration-150 ease-in-out mb-4">
+                            Place Order
+                        </button>
+
+                        <!-- Security Notice -->
+                        <div class="flex items-center justify-center text-xs text-gray-500">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            </svg>
+                            Secure 256-bit SSL encryption
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Back to Cart -->
+            <a href="/cart" class="inline-flex items-center text-blue-600 hover:text-blue-500 mt-6">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+                Back to Cart
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

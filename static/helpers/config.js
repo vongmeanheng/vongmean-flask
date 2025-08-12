@@ -25,15 +25,11 @@ createApp({
                     apartment: '',
                     city: '',
                     state: '',
-                    zipCode: '',
-                    country: ''
+
                },
                payment: {
-                    method: 'credit_card',
-                    cardNumber: '',
-                    cardName: '',
-                    expiryDate: '',
-                    cvv: ''
+                    method: 'bakong',
+
                },
                specialInstructions: '',
                tax_rate: 0.08
@@ -102,7 +98,7 @@ createApp({
           },
 
 
-
+          // order bro
           calTax() {
                return (this.calGrandTotal() * this.tax_rate).toFixed(2);
           },
@@ -110,22 +106,16 @@ createApp({
                return (parseFloat(this.calGrandTotal()) + parseFloat(this.shipping_fee) + parseFloat(this.calTax())).toFixed(2);
           },
           submitOrder() {
+               const orderEndpoint = "http://127.0.0.1:5000/order"
                if (!this.customer.firstName || !this.customer.lastName || !this.customer.email || !this.customer.phone) {
                     alert('Please fill in all required contact information.');
                     return;
                }
 
-               if (!this.address.street || !this.address.city || !this.address.state || !this.address.zipCode || !this.address.country) {
-                    alert('Please fill in all required address information.');
-                    return;
-               }
-
-               if (this.payment.method === 'credit_card') {
-                    if (!this.payment.cardNumber || !this.payment.cardName || !this.payment.expiryDate || !this.payment.cvv) {
-                         alert('Please fill in all required payment information.');
-                         return;
-                    }
-               }
+               // if (!this.address.street || !this.address.city || !this.address.state) {
+               //      alert('Please fill in all required address information.');
+               //      return;
+               // }
 
 
                const orderData = {
@@ -141,12 +131,20 @@ createApp({
                          total: this.calOrderTotal()
                     }
                };
+               
+               const reqPostOrder = async (payload) => {
+                    return await axios
+                         .post(orderEndpoint, payload).then((res) => {
+                              return Promise.resolve(res.data);
+                         }).catch((err) => {
+                              return Promise.reject(err)
+                         })
+               }
+               reqPostOrder(orderData)
 
-               console.log('Order submitted:', orderData);
-               // Send to your backend API
-               // this.processOrder(orderData);
+               // console.log('sab order:', orderData);
 
-               alert('Order placed successfully!');
+
           }
 
      }

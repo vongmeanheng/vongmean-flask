@@ -6,6 +6,7 @@ from email.mime.multipart import MIMEMultipart
 
 app = Flask(__name__)
 
+# Telegram
 token = "8420874385:AAG89KOYSxNNtLQCqrT3Uwtc3U6IxKhikoQ"
 chatId = "1084261917"
 url = f"https://api.telegram.org/bot{token}/sendMessage"
@@ -128,7 +129,7 @@ def create_order():
     <tr><td><b>👤 ឈ្មោះ:</b></td><td>{name}</td></tr>
     <tr><td><b>🏠 អាស័យដ្ឋាន:</b></td><td>{street} {city}</td></tr>
     <tr><td><b>📧 អ៊ីមែល:</b></td><td>{email}</td></tr>
-    <tr><td><b>📞 លេខទូរស័ព្ទ:</b></td><td><code>{phone}</code></td></tr>
+    <tr><td><b>📞 លេខទូរស័ព្ទ:</b></td><td>{phone}</td></tr>
     <tr><td><b>💳 បង់តាមរយៈ:</b></td><td>{payment}</td></tr>
     </table>
     <hr>

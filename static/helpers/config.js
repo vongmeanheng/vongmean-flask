@@ -28,7 +28,7 @@ createApp({
 
                },
                payment: {
-                    method: 'bakong',
+                    method: 'Bakong',
 
                },
                specialInstructions: '',
@@ -105,8 +105,16 @@ createApp({
           calOrderTotal() {
                return (parseFloat(this.calGrandTotal()) + parseFloat(this.shipping_fee) + parseFloat(this.calTax())).toFixed(2);
           },
-          submitOrder() {
+          reqPostOrder: async (payload) => {
                const orderEndpoint = "http://127.0.0.1:5000/order"
+               return await axios
+                    .post(orderEndpoint, payload).then((res) => {
+                         return Promise.resolve(res.data);
+                    }).catch((err) => {
+                         return Promise.reject(err)
+                    })
+          },
+          submitOrder() {
                if (!this.customer.firstName || !this.customer.lastName || !this.customer.email || !this.customer.phone) {
                     alert('Please fill in all required contact information.');
                     return;
@@ -131,16 +139,7 @@ createApp({
                          total: this.calOrderTotal()
                     }
                };
-               
-               const reqPostOrder = async (payload) => {
-                    return await axios
-                         .post(orderEndpoint, payload).then((res) => {
-                              return Promise.resolve(res.data);
-                         }).catch((err) => {
-                              return Promise.reject(err)
-                         })
-               }
-               reqPostOrder(orderData)
+               this.reqPostOrder(orderData)
 
                // console.log('sab order:', orderData);
 

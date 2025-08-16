@@ -23,7 +23,7 @@
                                          class="w-24 h-24 object-contain rounded-xl bg-white p-2 shadow-md group-hover:scale-105 transition-transform duration-300">
                                 </div>
                                 <div class="flex-1 min-w-0">
-                                    <h3 class="text-lg font-semibold text-slate-900 mb-2 line-clamp-2">[[ item.title ]]</h3>
+                                    <h3 class="text-lg font-semibold text-slate-900 mb-2 line-clamp-1">[[ item.title ]]</h3>
                                     <div class="inline-block px-3 py-1 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800 text-sm rounded-full mb-2">
                                         [[ item.category ]]
                                     </div>
@@ -161,11 +161,11 @@
                                 </div>
                             </div>
                             
-                            <a href="/checkout" class="block w-full group">
-                                <button class="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 hover:from-blue-700 hover:via-purple-700 hover:to-indigo-800 text-white font-bold py-4 px-6 rounded-2xl transition-all duration-300 ease-out shadow-lg hover:shadow-2xl transform hover:scale-[1.02] relative overflow-hidden">
+                            <a   :href="cart_list.length === 0 ? '/' : '/checkout'"  class="block w-full group">
+                                <button class="w-full bg-gradient-to-r cursor-pointer from-blue-600 via-purple-600 to-indigo-700 hover:from-blue-700 hover:via-purple-700 hover:to-indigo-800 text-white font-bold py-4 px-6 rounded-2xl transition-all duration-300 ease-out shadow-lg hover:shadow-2xl transform hover:scale-[1.02] relative overflow-hidden">
                                     <div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                                     <div class="relative flex items-center justify-center space-x-3">
-                                        <span class="text-lg">Proceed to Checkout</span>
+                                        <span class="text-lg">[[cart_list.length === 0 ? "Go to shopping" : "Proceed to Checkout"]]</span>
                                         <svg class="w-6 h-6 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                                         </svg>

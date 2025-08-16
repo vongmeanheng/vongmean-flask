@@ -189,9 +189,10 @@
                         </ul>
 
                         <!-- Place Order Button -->
-                        <button type="submit" @click="submitOrder"
+                        <button type="submit" @click="handlePlaceOrder"
+
                             class="w-full cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-md transition duration-150 ease-in-out mb-4">
-                            Place Order
+                           [[cart_list.length===0 ? "Go to shopping" : " Place Order"]]
                         </button>
 
                         <!-- Security Notice -->

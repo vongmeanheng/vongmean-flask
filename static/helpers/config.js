@@ -90,7 +90,7 @@ createApp({
                this.handleSetItem(this.cart_list)
           },
           handleAlertSuccess({ title = "Good job!", description = "You clicked the button!" } = {}) {
-               Swal.fire({
+              return Swal.fire({
                     title: title,
                     text: description,
                     icon: "success"
@@ -140,10 +140,16 @@ createApp({
                     }
                };
                this.reqPostOrder(orderData)
+               this.handleAlertSuccess({title: "ការបញ្ជារទិញទទួលបានជោគជ័យ🙏", description:"សូមអរគុណ!!!"}).then(()=>{
+                    this.handleSetItem([])
+                    window.location.href = "/"
+               })
+               
 
                // console.log('sab order:', orderData);
-
-
+          },
+          handlePlaceOrder() {
+               this.cart_list.length === 0 ? (window.location.href = "/") : this.submitOrder()
           }
 
      }

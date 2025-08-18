@@ -1,22 +1,20 @@
 from flask import Flask, render_template, jsonify, request
-from flask_cors import CORS
 import requests
 import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "https://smos-store.vercel.app"}})
 
 # Telegram
-token = "8420874385:AAG89KOYSxNNtLQCqrT3Uwtc3U6IxKhikoQ"
-chatId = "1084261917"
+token = "8428704156:AAGUxLpmmLrQnoD6GMXOwmMv3ce6cLVgTDw"
+chatId = "5861393275"
 url = f"https://api.telegram.org/bot{token}/sendMessage"
 
 # email
 port = 465
 smtp_server = "smtp.gmail.com"
-sender_email = "rornsokhengnaa@gmail.com"
+sender_email = "vongmeanheng601@gmail.com"
 password = "wadl utfb agpx mnih"
 
 

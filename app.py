@@ -6,7 +6,8 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "https://smos-store.vercel.app"}})
+
 # Telegram
 token = "8420874385:AAG89KOYSxNNtLQCqrT3Uwtc3U6IxKhikoQ"
 chatId = "1084261917"
@@ -179,5 +180,3 @@ def create_order():
         return jsonify({"status": "error", "message": "Failed"}), 500
 
 
-if __name__ == "__main__":
-    app.run()

@@ -1,11 +1,12 @@
 from flask import Flask, render_template, jsonify, request
+from flask_cors import CORS
 import requests
 import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 app = Flask(__name__)
-
+CORS(app)
 # Telegram
 token = "8420874385:AAG89KOYSxNNtLQCqrT3Uwtc3U6IxKhikoQ"
 chatId = "1084261917"
@@ -176,3 +177,7 @@ def create_order():
         return jsonify({"status": "success", "message": "Order sent to Telegram"})
     else:
         return jsonify({"status": "error", "message": "Failed"}), 500
+
+
+if __name__ == "__main__":
+    app.run()

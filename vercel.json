@@ -6,6 +6,6 @@
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "api/index.py" },
-    { "src": "/(.*)", "dest": "templates/master.html" }
+    { "src": "/(.*)", "dest": "templates/home.html" }
   ]
 }

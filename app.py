@@ -14,8 +14,8 @@ url = f"https://api.telegram.org/bot{token}/sendMessage"
 # email
 port = 465
 smtp_server = "smtp.gmail.com"
-sender_email = "vongmeanheng601@gmail.com"
-password = "wadl utfb agpx mnih"
+sender_email = "meanhengv@gmail.com"
+password = "dgtl ycav ruby msnq"
 
 
 @app.get("/")
